@@ -1,0 +1,95 @@
+[33mcommit 9ce0ce55369171ee228fc7a9ca7a2f41eea3a6bc[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m
+Author: bestloveayu <bestloveayu@gmail.com>
+Date:   Tue May 6 02:24:43 2025 +0800
+
+    Fix model folder case sensitivity
+
+ script.js | 159 [32m++++++++++++++++++++++++[m[31m--------------------------------------[m
+ 1 file changed, 62 insertions(+), 97 deletions(-)
+
+[33mcommit 2be8f81f7c8ef75bf762555768ae9e45d329c957[m
+Author: bestloveayu <bestloveayu@gmail.com>
+Date:   Tue May 6 02:11:18 2025 +0800
+
+    Initial commit with updated script.js
+
+ script.js | 43 [32m+++++++++++++++++++++++++++++[m[31m--------------[m
+ 1 file changed, 29 insertions(+), 14 deletions(-)
+
+[33mcommit 6beeae994a7b9c30af0ea770d3b6d88ff4869850[m
+Author: bestloveayu <bestloveayu@gmail.com>
+Date:   Tue May 6 01:59:14 2025 +0800
+
+    Update fetch URL to Google Apps Script
+
+ script.js | 60 [32m++++++++++++++++++++++++++[m[31m----------------------------------[m
+ 1 file changed, 26 insertions(+), 34 deletions(-)
+
+[33mcommit 7801daa5a1946236020ab7a47eb049c71c42e1f5[m
+Author: bestloveayu <bestloveayu@gmail.com>
+Date:   Tue May 6 01:15:52 2025 +0800
+
+    first commit
+
+ README.md | 1 [32m+[m
+ 1 file changed, 1 insertion(+)
+
+[33mcommit e3cc4d749e78df23a07b40b5f44f5bc2f9ad9c2f[m
+Author: bestloveayu <bestloveayu@gmail.com>
+Date:   Tue May 6 01:10:21 2025 +0800
+
+    Initial commit
+
+ .gitignore         |    2 [32m+[m
+ 1cup-bg.png        |  Bin [31m0[m -> [32m667696[m bytes
+ cabinet-bg.jpg     |  Bin [31m0[m -> [32m343409[m bytes
+ cup-bg.png         |  Bin [31m0[m -> [32m695278[m bytes
+ customer-seat.png  |  Bin [31m0[m -> [32m108746[m bytes
+ gin.png            |  Bin [31m0[m -> [32m614098[m bytes
+ glass.png          |  Bin [31m0[m -> [32m764484[m bytes
+ honey.png          |  Bin [31m0[m -> [32m4338096[m bytes
+ ice-blended.png    |  Bin [31m0[m -> [32m166275[m bytes
+ ice-drink.png      |  Bin [31m0[m -> [32m199764[m bytes
+ index.html         |   18 [32m+[m[31m-[m
+ lemon-juice.png    |  Bin [31m0[m -> [32m3088381[m bytes
+ lemon-slice.png    |  Bin [31m0[m -> [32m746308[m bytes
+ mint.png           |  Bin [31m0[m -> [32m317095[m bytes
+ orange-liqueur.png |  Bin [31m0[m -> [32m58860[m bytes
+ package-lock.json  |  947 [32m+++++++++++++++++++++++++++++++++++++++++++++++[m
+ package.json       |   24 [32m++[m
+ routes.js          |   28 [32m++[m
+ rum.png            |  Bin [31m0[m -> [32m426659[m bytes
+ script.js          | 1029 [32m+++++++++++++++++++++++++++++++++[m[31m-------------------[m
+ server.js          |   20 [32m+[m
+ sink.png           |  Bin [31m0[m -> [32m529052[m bytes
+ soda-water.png     |  Bin [31m0[m -> [32m814958[m bytes
+ styles.css         |  577 [32m++++++++++++++++++++++++[m[31m-----[m
+ tonic-water.png    |  Bin [31m0[m -> [32m225831[m bytes
+ 25 files changed, 2157 insertions(+), 488 deletions(-)
+
+[33mcommit faba29895e5b9da58e12ca76a35a3bf3a95cff96[m
+Author: unknown <bestloveayu@gmail.com>
+Date:   Sun Apr 27 22:30:48 2025 +0800
+
+    Initial commit
+
+ angry-customer.jpg                    |  Bin [31m0[m -> [32m578705[m bytes
+ bar-counter-bg.jpg                    |  Bin [31m0[m -> [32m791765[m bytes
+ bees-knees-result.jpg                 |  Bin [31m0[m -> [32m77607[m bytes
+ bottle.png                            |  Bin [31m0[m -> [32m594787[m bytes
+ canchanchara-result.jpg               |  Bin [31m0[m -> [32m50153[m bytes
+ daiquiri-result.jpg                   |  Bin [31m0[m -> [32m42240[m bytes
+ frozen-daiquiri-result.jpg            |  Bin [31m0[m -> [32m208052[m bytes
+ gin-fizz-result.jpg                   |  Bin [31m0[m -> [32m32307[m bytes
+ gin-tonic-result.jpg                  |  Bin [31m0[m -> [32m50912[m bytes
+ index.html                            |   58 [32m+[m
+ mojito-result.jpg                     |  Bin [31m0[m -> [32m175004[m bytes
+ script.js                             |  423 [32m++++++[m
+ southside-result.jpg                  |  Bin [31m0[m -> [32m5991[m bytes
+ styles.css                            |  160 [32m++[m
+ teachable-machine-model/metadata.json |    1 [32m+[m
+ teachable-machine-model/model.json    |    1 [32m+[m
+ teachable-machine-model/weights.bin   |  Bin [31m0[m -> [32m2154432[m bytes
+ teachablemachine-image.min.js         | 2656 [32m+++++++++++++++++++++++++++++++++[m
+ white-lady-result.jpg                 |  Bin [31m0[m -> [32m26031[m bytes
+ 19 files changed, 3299 insertions(+)

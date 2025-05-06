@@ -4,7 +4,7 @@ const steps = [
     { key: "sparkle", options: [{ name: "蘇打水", id: "soda-water", key: "sparkle" }, { name: "通寧水", id: "tonic-water", key: "sparkle" }] },
     { key: "flavor", options: [{ name: "蜂蜜", id: "honey", key: "flavor" }, { name: "薄荷葉", id: "mint", key: "flavor" }, { name: "橙酒", id: "orange-liqueur", key: "flavor" }] },
     { key: "garnish", options: [{ name: "檸檬片", id: "lemon-slice", key: "garnish" }] },
-    { key: "ice", options: [{ name: "冰飲", id: "ice-drink", key: "ice" }, { name: "冰沙", id: "ice-blended", key: "ice" }] }
+    { key: "ice", options: [{ name: "冰塊", id: "ice-drink", key: "ice" }, { name: "冰沙", id: "ice-blended", key: "ice" }] }
 ];
 
 let currentStep = 0;
@@ -282,7 +282,7 @@ function evaluateCocktail(selections) {
         selections.sparkle === "蘇打水" &&
         selections.flavor === "薄荷葉" &&
         selections.garnish === "檸檬片" &&
-        selections.ice === "冰飲") {
+        selections.ice === "冰塊") {
         return { stars: 3, name: "莫西多", image: "./mojito-result.jpg", dialogue: "太完美了，這就是我想喝到的味道!" };
     }
     if (selections.base === "琴酒" &&
@@ -290,7 +290,7 @@ function evaluateCocktail(selections) {
         selections.sparkle === "蘇打水" &&
         selections.flavor === undefined &&
         selections.garnish === "檸檬片" &&
-        selections.ice === "冰飲") {
+        selections.ice === "冰塊") {
         return { stars: 2, name: "琴費士", image: "./kGin-fizz-result.jpg", dialogue: "好像還少了點清涼香氣.." };
     }
     if (selections.base === "蘭姆酒" &&
@@ -298,7 +298,7 @@ function evaluateCocktail(selections) {
         selections.sparkle === "蘇打水" &&
         selections.flavor === "蜂蜜" &&
         selections.garnish === "檸檬片" &&
-        selections.ice === "冰飲") {
+        selections.ice === "冰塊") {
         return { stars: 2, name: "Canchánchara", image: "./canchanchara-result.jpg", dialogue: "這杯的味道似乎多了點蜂蜜味，但少了點清涼香氣。" };
     }
     if (selections.base === "琴酒" &&
@@ -306,7 +306,7 @@ function evaluateCocktail(selections) {
         selections.sparkle === undefined &&
         selections.flavor === "薄荷葉" &&
         selections.garnish === "檸檬片" &&
-        selections.ice === "冰飲") {
+        selections.ice === "冰塊") {
         return { stars: 2, name: "南方 Southside", image: "./southside-result.jpg", dialogue: "喝起來酸酸的又有薄荷香氣，但好像少了氣泡感。" };
     }
     if (selections.base === "琴酒" &&
@@ -314,7 +314,7 @@ function evaluateCocktail(selections) {
         selections.sparkle === "通寧水" &&
         selections.flavor === undefined &&
         selections.garnish === "檸檬片" &&
-        selections.ice === "冰飲") {
+        selections.ice === "冰塊") {
         return { stars: 1, name: "琴通寧", image: "./gin-tonic-result.jpg", dialogue: "氣泡的口感喝起來不錯，但味道不夠酸。" };
     }
     if (selections.base === "蘭姆酒" &&
@@ -330,7 +330,7 @@ function evaluateCocktail(selections) {
         selections.sparkle === undefined &&
         selections.flavor === "蜂蜜" &&
         selections.garnish === "檸檬片" &&
-        selections.ice === "冰飲") {
+        selections.ice === "冰塊") {
         return { stars: 1, name: "蜂之膝", image: "./bees-knees-result.jpg", dialogue: "這杯的味道似乎少了點清涼香氣，而且喝起來沒有氣泡口感" };
     }
     if (selections.base === "琴酒" &&
@@ -338,7 +338,7 @@ function evaluateCocktail(selections) {
         selections.sparkle === undefined &&
         selections.flavor === "橙酒" &&
         selections.garnish === "檸檬片" &&
-        selections.ice === "冰飲") {
+        selections.ice === "冰塊") {
         return { stars: 1, name: "白色佳人", image: "./white-lady-result.jpg", dialogue: "這杯的味道似乎少了點清涼香氣，而且喝起來沒有氣泡口感" };
     }
     if (selections.base === "蘭姆酒" &&
@@ -346,7 +346,7 @@ function evaluateCocktail(selections) {
         selections.sparkle === undefined &&
         selections.flavor === undefined &&
         selections.garnish === "檸檬片" &&
-        selections.ice === "冰沙") {
+        selections.ice === "冰塊") {
         return { stars: 1, name: "霜凍黛綺莉", image: "./frozen-daiquiri-result.jpg", dialogue: "做成冰沙沒辦法喝到氣泡感，而且也少了點清涼香氣。" };
     }
     return { stars: 0, name: "未知調酒", image: "./angry-customer.jpg", dialogue: "因為你亂加材料，顧客憤怒的離開了！" };
@@ -541,7 +541,7 @@ function handleDrop(e) {
 
         currentStep = Math.max(currentStep, stepIndex + 1);
     } else {
-        feedbackMessage.textContent = `無法加入${name}，請勿跳回前一步驟！`;
+        feedbackMessage.textContent = `無法加入${name}，你放材料的順序不對！`;
         feedbackMessage.classList.add('show');
         setTimeout(() => feedbackMessage.classList.remove('show'), 2000);
     }
@@ -559,7 +559,7 @@ function handleSinkDrop(e) {
     const confirmDialog = document.createElement('div');
     confirmDialog.className = 'confirm-dialog';
     confirmDialog.innerHTML = `
-        <p>你是否要重新製作調酒？</p>
+        <p>確定要把酒倒入水槽並重新製作嗎？</p>
         <button id="confirm-reset-yes">確認</button>
         <button id="confirm-reset-no">取消</button>
     `;
@@ -598,7 +598,7 @@ function handleCustomerDrop(e) {
     const confirmDialog = document.createElement('div');
     confirmDialog.className = 'confirm-dialog';
     confirmDialog.innerHTML = `
-        <p>你是否要為顧客送上這杯調酒？</p>
+        <p>是否確定為顧客送上這杯調酒？</p>
         <button id="confirm-serve-yes">確認</button>
         <button id="confirm-serve-no">取消</button>
     `;

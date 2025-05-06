@@ -40,19 +40,19 @@
         </script><!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-<base href="/">
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Micro Drunk</title>
-  <link rel="stylesheet" href="./styles.css">
-  <script src="./teachablemachine-image.min.js"></script>
-    <meta http-equiv="Content-Security-Policy" content="script-src 'self' https://cdn.jsdelivr.net 'unsafe-eval';">	
+    <base href="/abcdef/">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>微醺研究所</title>
+    <link rel="stylesheet" href="./styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@0.8/dist/teachablemachine-image.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&display=swap" rel="stylesheet">
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self' https://cdn.jsdelivr.net https://docs.google.com 'unsafe-eval';">
 </head>
 <body>
     <div id="app"></div>
-    <canvas id="particle-canvas"></canvas>
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@3.21.0/dist/tf.min.js"></script>
-    <script src="./teachablemachine-image.min.js"></script>
-    <script src="./script.js"></script>
+    <canvas id="particle-canvas" style="position: absolute; top: 0; left: 0; pointer-events: none;"></canvas>
+    <script src="./script.js" defer></script>
 </body>
 </html>

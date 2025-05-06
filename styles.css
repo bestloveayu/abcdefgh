@@ -122,7 +122,6 @@ body {
     border-bottom: none;
     background: transparent;
     z-index: 1;
-    /* 添加酒杯區背景圖片 */
     background-image: url('./cup-bg.png');
     background-size: cover;
     background-position: center;
@@ -139,7 +138,7 @@ body {
     position: relative;
     cursor: move;
     transition: transform 0.5s ease;
-    z-index: 2; /* 確保酒杯動畫在背景圖片之上 */
+    z-index: 2;
 }
 
 .sink-area {
@@ -529,7 +528,6 @@ body {
     margin: 20px 0;
 }
 
-/* 精緻化的材料元件 */
 #base1 { background-image: url('./gin.png'); }
 #base2 { background-image: url('./rum.png'); }
 #lemon-juice { background-image: url('./lemon-juice.png'); }

@@ -179,43 +179,35 @@ async function submitToGoogleForm() {
         return true;
     }
 
-    async function loadTeachableModel() {
-        const URL = "/teachable-machine-model/";
-        const modelURL = URL + "model.json";
-        const metadataURL = URL + "metadata.json";
-        const teachableResult = document.getElementById("teachable-result");
+async function loadTeachableModel() {
+    const URL = "./teachable-machine-model/"; // 相對路徑，解析為 /abcdef/teachable-machine-model/
+    const modelURL = URL + "model.json";
+    const metadataURL = URL + "metadata.json";
+    const teachableResult = document.getElementById("teachable-result");
 
-        console.log("檢查 tmImage 是否已定義...");
-        const tmImageLoaded = await waitForTmImage();
-        if (!tmImageLoaded) {
-            if (teachableResult) {
-                teachableResult.innerText = "錯誤：tmImage 未定義，請確認 teachablemachine-image.min.js 是否正確載入";
-            }
-            return;
+    console.log("檢查 tmImage 是否已定義...");
+    const tmImageLoaded = await waitForTmImage();
+    if (!tmImageLoaded) {
+        if (teachableResult) {
+            teachableResult.innerText = "錯誤：tmImage 未定義，請確認 teachablemachine-image.min.js 是否正確載入";
         }
+        return;
+    }
 
-        try {
-            console.log("開始載入模型檔案...");
-            const modelResponse = await fetch(modelURL);
-            if (!modelResponse.ok) {
-                throw new Error(`無法載入模型檔案 ${modelURL}，狀態碼: ${modelResponse.status}`);
-            }
-            const metadataResponse = await fetch(metadataURL);
-            if (!metadataResponse.ok) {
-                throw new Error(`無法載入元數據檔案 ${metadataURL}，狀態碼: ${metadataResponse.status}`);
-            }
-            model = await tmImage.load(modelURL, metadataURL);
-            console.log("Teachable Machine model loaded successfully");
-            if (teachableResult) {
-                teachableResult.innerText = "模型載入成功";
-            }
-        } catch (error) {
-            console.error("模型載入失敗:", error);
-            if (teachableResult) {
-                teachableResult.innerText = `無法載入模型：${error.message}。請確認 teachable-machine-model 資料夾中是否存在 model.json、metadata.json 和 weights.bin 檔案，並使用本地伺服器運行（http://localhost:3000）。`;
-            }
+    try {
+        console.log("開始載入模型檔案:", modelURL);
+        model = await tmImage.load(modelURL, metadataURL);
+        console.log("Teachable Machine model loaded successfully");
+        if (teachableResult) {
+            teachableResult.innerText = "模型載入成功";
+        }
+    } catch (error) {
+        console.error("模型載入失敗:", error);
+        if (teachableResult) {
+            teachableResult.innerText = `無法載入模型：${error.message}。請確認 teachable-machine-model 資料夾中是否存在 model.json、metadata.json 和 weights.bin 檔案。`;
         }
     }
+}
 
 async function predictCocktail() {
   const webcamContainer = document.getElementById("webcam-container");

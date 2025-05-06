@@ -139,6 +139,7 @@ body {
     cursor: move;
     transition: transform 0.5s ease;
     z-index: 2;
+    touch-action: none; /* 防止觸控時滾動 */
 }
 
 .sink-area {
@@ -366,6 +367,7 @@ body {
     border-radius: 50%;
     box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
     animation: glow 2s infinite alternate;
+    touch-action: none; /* 防止觸控時滾動 */
 }
 
 @keyframes glow {

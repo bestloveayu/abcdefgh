@@ -446,12 +446,20 @@ function render() {
     ingredients.forEach(ingredient => {
         ingredient.addEventListener('dragstart', handleDragStart);
         ingredient.addEventListener('dragend', handleDragEnd);
+        // 添加觸控事件
+        ingredient.addEventListener('touchstart', handleTouchStart, { passive: false });
+        ingredient.addEventListener('touchmove', handleTouchMove, { passive: false });
+        ingredient.addEventListener('touchend', handleTouchEnd, { passive: false });
     });
 
     const glass = document.getElementById('glass');
     if (glass) {
         glass.addEventListener('dragstart', handleGlassDragStart);
         glass.addEventListener('dragend', handleGlassDragEnd);
+        // 添加觸控事件
+        glass.addEventListener('touchstart', handleTouchStart, { passive: false });
+        glass.addEventListener('touchmove', handleTouchMove, { passive: false });
+        glass.addEventListener('touchend', handleTouchEnd, { passive: false });
     }
 
     const glassArea = document.getElementById('glass-area');
@@ -621,6 +629,92 @@ function handleCustomerDrop(e) {
         }
         confirmDialog.remove();
     };
+}
+
+// 觸控事件處理
+let touchElement = null;
+let touchStartX = 0;
+let touchStartY = 0;
+let initialX = 0;
+let initialY = 0;
+
+function handleTouchStart(e) {
+    e.preventDefault();
+    touchElement = e.target.closest('.ingredient, #glass');
+    if (!touchElement) return;
+
+    touchElement.classList.add('dragging');
+    const touch = e.touches[0];
+    touchStartX = touch.clientX;
+    touchStartY = touch.clientY;
+
+    // 記錄初始位置
+    const rect = touchElement.getBoundingClientRect();
+    initialX = rect.left;
+    initialY = rect.top;
+
+    // 設置元素為 absolute 定位以便移動
+    touchElement.style.position = 'fixed';
+    touchElement.style.left = `${initialX}px`;
+    touchElement.style.top = `${initialY}px`;
+    touchElement.style.zIndex = '1000';
+}
+
+function handleTouchMove(e) {
+    e.preventDefault();
+    if (!touchElement) return;
+
+    const touch = e.touches[0];
+    const deltaX = touch.clientX - touchStartX;
+    const deltaY = touch.clientY - touchStartY;
+
+    // 更新元素位置
+    touchElement.style.left = `${initialX + deltaX}px`;
+    touchElement.style.top = `${initialY + deltaY}px`;
+}
+
+function handleTouchEnd(e) {
+    e.preventDefault();
+    if (!touchElement) return;
+
+    touchElement.classList.remove('dragging');
+    touchElement.style.position = '';
+    touchElement.style.left = '';
+    touchElement.style.top = '';
+    touchElement.style.zIndex = '';
+
+    // 判斷是否落在目標區域
+    const touch = e.changedTouches[0];
+    const x = touch.clientX;
+    const y = touch.clientY;
+
+    const glassArea = document.getElementById('glass-area');
+    const sinkArea = document.getElementById('sink-area');
+    const customerArea = document.getElementById('customer-area');
+
+    const isInArea = (area) => {
+        if (!area) return false;
+        const rect = area.getBoundingClientRect();
+        return x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom;
+    };
+
+    const simulatedEvent = {
+        preventDefault: () => {},
+        dataTransfer: {
+            getData: () => touchElement.id === 'glass' ? 'glass' : touchElement.id,
+            setData: () => {}
+        }
+    };
+
+    if (isInArea(glassArea) && touchElement.id !== 'glass') {
+        handleDrop(simulatedEvent);
+    } else if (isInArea(sinkArea) && touchElement.id === 'glass') {
+        handleSinkDrop(simulatedEvent);
+    } else if (isInArea(customerArea) && touchElement.id === 'glass') {
+        handleCustomerDrop(simulatedEvent);
+    }
+
+    touchElement = null;
 }
 
 function resetGame() {

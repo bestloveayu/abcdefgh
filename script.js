@@ -1,10 +1,28 @@
 const steps = [
-    { key: "base", options: [{ name: "琴酒", id: "base1", key: "base" }, { name: "蘭姆酒", id: "base2", key: "base" }] },
-    { key: "lemon", options: [{ name: "檸檬汁", id: "lemon-juice", key: "lemon" }] },
-    { key: "sparkle", options: [{ name: "蘇打水", id: "soda-water", key: "sparkle" }, { name: "通寧水", id: "tonic-water", key: "sparkle" }] },
-    { key: "flavor", options: [{ name: "蜂蜜", id: "honey", key: "flavor" }, { name: "薄荷葉", id: "mint", key: "flavor" }, { name: "橙酒", id: "orange-liqueur", key: "flavor" }] },
-    { key: "garnish", options: [{ name: "檸檬片", id: "lemon-slice", key: "garnish" }] },
-    { key: "ice", options: [{ name: "冰塊", id: "ice-drink", key: "ice" }, { name: "冰沙", id: "ice-blended", key: "ice" }] }
+    { key: "base", options: [
+        { name: "蘭姆酒", id: "base1", key: "base" },
+        { name: "威士忌", id: "base2", key: "base" },
+        { name: "伏特加", id: "base3", key: "base" }
+    ]},
+    { key: "lemon", options: [
+        { name: "檸檬汁", id: "lemon-juice", key: "lemon" }
+    ]},
+    { key: "flavor", options: [
+        { name: "咖啡", id: "coffee", key: "flavor" },
+        { name: "咖啡利口酒", id: "coffee-liqueur", key: "flavor" },
+        { name: "肉桂", id: "cinnamon", key: "flavor" },
+        { name: "蜂蜜", id: "honey", key: "flavor" },
+        { name: "橙酒", id: "orange-liqueur", key: "flavor" }
+    ]},
+    { key: "garnish", options: [
+        { name: "檸檬片", id: "lemon-slice", key: "garnish" },
+        { name: "鮮奶油", id: "cream", key: "garnish" },
+        { name: "咖啡豆", id: "coffee-bean", key: "garnish" }
+    ]},
+    { key: "ice", options: [
+        { name: "冰塊", id: "ice-drink", key: "ice" },
+        { name: "熱飲", id: "hot-drink", key: "ice" }
+    ]}
 ];
 
 let currentStep = 0;
@@ -12,7 +30,6 @@ let selections = {};
 let result = null;
 let model = null;
 let webcam = null;
-let isPredicting = false;
 let userId = null;
 let recognitionResult = null;
 
@@ -86,7 +103,6 @@ async function submitToGoogleForm() {
         userId,
         base: selections.base || "無",
         lemon: selections.lemon || "無",
-        sparkle: selections.sparkle || "無",
         flavor: selections.flavor || "無",
         garnish: selections.garnish || "無",
         ice: selections.ice || "無",
@@ -107,7 +123,6 @@ async function submitToGoogleForm() {
                 'entry.2132530962': formData.userId,
                 'entry.1990997538': formData.base,
                 'entry.16139639': formData.lemon,
-                'entry.2105822215': formData.sparkle,
                 'entry.1291148248': formData.flavor,
                 'entry.1589469551': formData.garnish,
                 'entry.1876026105': formData.ice,
@@ -277,79 +292,63 @@ async function predictCocktail() {
 }
 
 function evaluateCocktail(selections) {
-    if (selections.base === "蘭姆酒" &&
-        selections.lemon === "檸檬汁" &&
-        selections.sparkle === "蘇打水" &&
-        selections.flavor === "薄荷葉" &&
-        selections.garnish === "檸檬片" &&
-        selections.ice === "冰塊") {
-        return { stars: 3, name: "莫西多", image: "./mojito-result.jpg", dialogue: "太完美了，這就是我想喝到的味道!" };
-    }
-    if (selections.base === "琴酒" &&
-        selections.lemon === "檸檬汁" &&
-        selections.sparkle === "蘇打水" &&
-        selections.flavor === undefined &&
-        selections.garnish === "檸檬片" &&
-        selections.ice === "冰塊") {
-        return { stars: 2, name: "琴費士", image: "./kGin-fizz-result.jpg", dialogue: "好像還少了點清涼香氣.." };
-    }
-    if (selections.base === "蘭姆酒" &&
-        selections.lemon === "檸檬汁" &&
-        selections.sparkle === "蘇打水" &&
-        selections.flavor === "蜂蜜" &&
-        selections.garnish === "檸檬片" &&
-        selections.ice === "冰塊") {
-        return { stars: 2, name: "Canchánchara", image: "./canchanchara-result.jpg", dialogue: "這杯的味道似乎多了點蜂蜜味，但少了點清涼香氣。" };
-    }
-    if (selections.base === "琴酒" &&
-        selections.lemon === "檸檬汁" &&
-        selections.sparkle === undefined &&
-        selections.flavor === "薄荷葉" &&
-        selections.garnish === "檸檬片" &&
-        selections.ice === "冰塊") {
-        return { stars: 2, name: "南方 Southside", image: "./southside-result.jpg", dialogue: "喝起來酸酸的又有薄荷香氣，但好像少了氣泡感。" };
-    }
-    if (selections.base === "琴酒" &&
+    if (selections.base === "威士忌" &&
         selections.lemon === undefined &&
-        selections.sparkle === "通寧水" &&
-        selections.flavor === undefined &&
-        selections.garnish === "檸檬片" &&
-        selections.ice === "冰塊") {
-        return { stars: 1, name: "琴通寧", image: "./gin-tonic-result.jpg", dialogue: "氣泡的口感喝起來不錯，但味道不夠酸。" };
+        selections.flavor === "咖啡" &&
+        selections.garnish === "鮮奶油" &&
+        selections.ice === "熱飲") {
+        return { stars: 3, name: "愛爾蘭咖啡", image: "./irish-coffee-result.jpg", dialogue: "有威士忌加咖啡的味道，配上溫熱的口感，還有我愛的鮮奶油，我又重新振作了。" };
     }
-    if (selections.base === "蘭姆酒" &&
+    if (selections.base === "威士忌" &&
         selections.lemon === "檸檬汁" &&
-        selections.sparkle === undefined &&
-        selections.flavor === undefined &&
-        selections.garnish === "檸檬片" &&
-        selections.ice === "冰飲") {
-        return { stars: 1, name: "黛綺莉", image: "./daiquiri-result.jpg", dialogue: "這杯的味道似乎少了點清涼香氣，而且喝起來沒有氣泡口感" };
-    }
-    if (selections.base === "琴酒" &&
-        selections.lemon === "檸檬汁" &&
-        selections.sparkle === undefined &&
         selections.flavor === "蜂蜜" &&
         selections.garnish === "檸檬片" &&
-        selections.ice === "冰塊") {
-        return { stars: 1, name: "蜂之膝", image: "./bees-knees-result.jpg", dialogue: "這杯的味道似乎少了點清涼香氣，而且喝起來沒有氣泡口感" };
+        selections.ice === "熱飲") {
+        return { stars: 2, name: "熱托迪", image: "./hot-toddy-result.jpg", dialogue: "威士忌的風味很棒，如果有咖啡的味道就更完美了..." };
     }
-    if (selections.base === "琴酒" &&
+    if (selections.base === "蘭姆酒" &&
+        selections.lemon === undefined &&
+        selections.flavor === "肉桂" &&
+        selections.garnish === "鮮奶油" &&
+        selections.ice === "熱飲") {
+        return { stars: 1, name: "奶油熱蘭姆酒", image: "./hot-buttered-rum-result.jpg", dialogue: "雖然喝起來是熱的，蘭姆酒跟鮮奶油我也很喜歡，但裡面有肉桂的味道，讓我覺得不太舒服。" };
+    }
+    if (selections.base === "伏特加" &&
+        selections.lemon === undefined &&
+        selections.flavor === "咖啡" &&
+        selections.garnish === "咖啡豆" &&
+        selections.ice === "冰塊") {
+        return { stars: 1, name: "咖啡馬丁尼", image: "./espresso-martini-result.jpg", dialogue: "喝起來有濃濃的咖啡味，但喝冷飲對我的身體不太好。" };
+    }
+    if (selections.base === "伏特加" &&
+        selections.lemon === undefined &&
+        selections.flavor === "咖啡利口酒" &&
+        selections.garnish === "鮮奶油" &&
+        selections.ice === "冰塊") {
+        return { stars: 1, name: "白色俄羅斯", image: "./white-russian-result.jpg", dialogue: "喝起來有濃濃的咖啡味，但喝冷飲對我的身體不太好。" };
+    }
+    if (selections.base === "伏特加" &&
+        selections.lemon === undefined &&
+        selections.flavor === "咖啡利口酒" &&
+        selections.garnish === undefined &&
+        selections.ice === "冰塊") {
+        return { stars: 1, name: "黑色俄羅斯", image: "./black-russian-result.jpg", dialogue: "喝起來有濃濃的咖啡味，但喝冷飲對我的身體不太好。" };
+    }
+    if (selections.base === "伏特加" &&
         selections.lemon === "檸檬汁" &&
-        selections.sparkle === undefined &&
         selections.flavor === "橙酒" &&
         selections.garnish === "檸檬片" &&
-        selections.ice === "冰塊") {
-        return { stars: 1, name: "白色佳人", image: "./white-lady-result.jpg", dialogue: "這杯的味道似乎少了點清涼香氣，而且喝起來沒有氣泡口感" };
+        selections.ice === undefined) {
+        return { stars: 1, name: "神風特攻隊", image: "./kamikaze-result.jpg", dialogue: "喝起來太酸，而且太冰了，我身體受不了。" };
     }
-    if (selections.base === "蘭姆酒" &&
+    if (selections.base === "威士忌" &&
         selections.lemon === "檸檬汁" &&
-        selections.sparkle === undefined &&
         selections.flavor === undefined &&
         selections.garnish === "檸檬片" &&
-        selections.ice === "冰塊") {
-        return { stars: 1, name: "霜凍黛綺莉", image: "./frozen-daiquiri-result.jpg", dialogue: "做成冰沙沒辦法喝到氣泡感，而且也少了點清涼香氣。" };
+        selections.ice === undefined) {
+        return { stars: 1, name: "威士忌酸酒", image: "./whiskey-sour-result.jpg", dialogue: "喝起來太酸，而且太冰了，我身體受不了。" };
     }
-    return { stars: 0, name: "未知調酒", image: "./angry-customer.jpg", dialogue: "因為你亂加材料，顧客憤怒的離開了！" };
+    return { stars: 0, name: "未知調酒", image: "./angry-customer.jpg", dialogue: "你亂加各種材料，調出來的風味根本無法給顧客喝..." };
 }
 
 function render() {
@@ -371,7 +370,6 @@ function render() {
         const ingredients = `
             基酒: ${selections.base || "無"}<br>
             酸味: ${selections.lemon || "無"}<br>
-            氣泡: ${selections.sparkle || "無"}<br>
             特別風味: ${selections.flavor || "無"}<br>
             裝飾: ${selections.garnish || "無"}<br>
             冰塊: ${selections.ice || "無"}
@@ -408,26 +406,24 @@ function render() {
         <div class="container">
             <div class="card">
                 <h1>歡迎來到微醺研究所</h1>
-                <p>你可以任意將材料加入酒杯製作調酒，請將材料拖曳至酒杯，但要注意材料加入的順序，一旦加錯了，就只能把酒杯的材料倒入水槽中重新製作。如果你完成調酒，請將酒杯拖曳至顧客區，為顧客送上調酒。</p>
+                <p>你可以任意將材料加入酒杯製作調酒，請將材料拖曳至酒杯，但要注意材料加入的順序（基酒 -> 酸味 -> 特別風味 -> 裝飾 -> 冰塊/熱飲），一旦加錯了，就只能把酒杯的材料倒入水槽中重新製作。如果你完成調酒，請將酒杯拖曳至顧客區，為顧客送上調酒。</p>
             </div>
             <div class="bar-counter">
                 <div class="cabinet">
-                    <div class="cabinet-section" data-section="flavor">${steps[3].options.map(o => `<div class="ingredient ${o.id}" id="${o.id}" draggable="true" data-name="${o.name}" data-key="${o.key}"><span class="ingredient-label">${o.name}</span></div>`).join('')}</div>
+                    <div class="cabinet-section" data-section="flavor">${steps[2].options.map(o => `<div class="ingredient ${o.id}" id="${o.id}" draggable="true" data-name="${o.name}" data-key="${o.key}"><span class="ingredient-label">${o.name}</span></div>`).join('')}</div>
                     <div class="cabinet-section" data-section="base">${steps[0].options.map(o => `<div class="ingredient ${o.id}" id="${o.id}" draggable="true" data-name="${o.name}" data-key="${o.key}"><span class="ingredient-label">${o.name}</span></div>`).join('')}</div>
                     <div class="cabinet-section" data-section="lemon">${steps[1].options.map(o => `<div class="ingredient ${o.id}" id="${o.id}" draggable="true" data-name="${o.name}" data-key="${o.key}"><span class="ingredient-label">${o.name}</span></div>`).join('')}</div>
-                    <div class="cabinet-section" data-section="sparkle">${steps[2].options.map(o => `<div class="ingredient ${o.id}" id="${o.id}" draggable="true" data-name="${o.name}" data-key="${o.key}"><span class="ingredient-label">${o.name}</span></div>`).join('')}</div>
-                    <div class="cabinet-section" data-section="ice">${steps[5].options.map(o => `<div class="ingredient ${o.id}" id="${o.id}" draggable="true" data-name="${o.name}" data-key="${o.key}"><span class="ingredient-label">${o.name}</span></div>`).join('')}</div>
-                    <div class="cabinet-section" data-section="garnish">${steps[4].options.map(o => `<div class="ingredient ${o.id}" id="${o.id}" draggable="true" data-name="${o.name}" data-key="${o.key}"><span class="ingredient-label">${o.name}</span></div>`).join('')}</div>
+                    <div class="cabinet-section" data-section="ice">${steps[4].options.map(o => `<div class="ingredient ${o.id}" id="${o.id}" draggable="true" data-name="${o.name}" data-key="${o.key}"><span class="ingredient-label">${o.name}</span></div>`).join('')}</div>
+                    <div class="cabinet-section" data-section="garnish">${steps[3].options.map(o => `<div class="ingredient ${o.id}" id="${o.id}" draggable="true" data-name="${o.name}" data-key="${o.key}"><span class="ingredient-label">${o.name}</span></div>`).join('')}</div>
                 </div>
                 <div class="counter-area">
                     <div class="glass-area" id="glass-area">
                         <div id="glass" draggable="true">
                             <div class="liquid-layer layer-1 ${selections.base ? 'active' : ''}"></div>
                             <div class="liquid-layer layer-2 ${selections.lemon ? 'active' : ''}"></div>
-                            <div class="liquid-layer layer-3 ${selections.sparkle ? 'active' : ''}"></div>
-                            <div class="liquid-layer layer-4 ${selections.flavor ? 'active' : ''}"></div>
-                            <div class="liquid-layer layer-5 ${selections.garnish ? 'active' : ''}"></div>
-                            <div class="liquid-layer layer-6 ${selections.ice ? 'active' : ''}"></div>
+                            <div class="liquid-layer layer-3 ${selections.flavor ? 'active' : ''}"></div>
+                            <div class="liquid-layer layer-4 ${selections.garnish ? 'active' : ''}"></div>
+                            <div class="liquid-layer layer-5 ${selections.ice ? 'active' : ''}"></div>
                         </div>
                     </div>
                     <div class="sink-area" id="sink-area">
@@ -446,7 +442,6 @@ function render() {
     ingredients.forEach(ingredient => {
         ingredient.addEventListener('dragstart', handleDragStart);
         ingredient.addEventListener('dragend', handleDragEnd);
-        // 添加觸控事件
         ingredient.addEventListener('touchstart', handleTouchStart, { passive: false });
         ingredient.addEventListener('touchmove', handleTouchMove, { passive: false });
         ingredient.addEventListener('touchend', handleTouchEnd, { passive: false });
@@ -456,7 +451,6 @@ function render() {
     if (glass) {
         glass.addEventListener('dragstart', handleGlassDragStart);
         glass.addEventListener('dragend', handleGlassDragEnd);
-        // 添加觸控事件
         glass.addEventListener('touchstart', handleTouchStart, { passive: false });
         glass.addEventListener('touchmove', handleTouchMove, { passive: false });
         glass.addEventListener('touchend', handleTouchEnd, { passive: false });
@@ -512,10 +506,9 @@ function handleDrop(e) {
     const name = draggedElement.dataset.name;
     const key = draggedElement.dataset.key;
     const stepIndex = steps.findIndex(step => step.key === key);
-
     const feedbackMessage = document.getElementById('feedback-message');
 
-    if (stepIndex >= currentStep) {
+    if (stepIndex === currentStep) {
         selections[key] = name;
         feedbackMessage.textContent = `成功加入${name}！`;
         feedbackMessage.classList.add('show');
@@ -531,17 +524,12 @@ function handleDrop(e) {
         }, 500);
 
         const layers = document.querySelectorAll('.liquid-layer');
-        const activeLayers = Array.from(layers).filter(layer => layer.classList.contains('active'));
-        layers.forEach((layer, index) => {
-            if (index === stepIndex && !layer.classList.contains('active')) {
-                layer.classList.add('active');
-                layer.style.bottom = `${50 * activeLayers.length}px`;
-            }
-        });
+        layers[stepIndex].classList.add('active');
+        layers[stepIndex].style.bottom = `${50 * stepIndex}px`;
 
-        currentStep = Math.max(currentStep, stepIndex + 1);
+        currentStep++;
     } else {
-        feedbackMessage.textContent = `無法加入${name}，你放材料的順序不對！`;
+        feedbackMessage.textContent = `無法加入${name}，順序不對！`;
         feedbackMessage.classList.add('show');
         setTimeout(() => feedbackMessage.classList.remove('show'), 2000);
     }
@@ -631,7 +619,6 @@ function handleCustomerDrop(e) {
     };
 }
 
-// 觸控事件處理
 let touchElement = null;
 let touchStartX = 0;
 let touchStartY = 0;
@@ -648,12 +635,10 @@ function handleTouchStart(e) {
     touchStartX = touch.clientX;
     touchStartY = touch.clientY;
 
-    // 記錄初始位置
     const rect = touchElement.getBoundingClientRect();
     initialX = rect.left;
     initialY = rect.top;
 
-    // 設置元素為 absolute 定位以便移動
     touchElement.style.position = 'fixed';
     touchElement.style.left = `${initialX}px`;
     touchElement.style.top = `${initialY}px`;
@@ -668,7 +653,6 @@ function handleTouchMove(e) {
     const deltaX = touch.clientX - touchStartX;
     const deltaY = touch.clientY - touchStartY;
 
-    // 更新元素位置
     touchElement.style.left = `${initialX + deltaX}px`;
     touchElement.style.top = `${initialY + deltaY}px`;
 }
@@ -683,7 +667,6 @@ function handleTouchEnd(e) {
     touchElement.style.top = '';
     touchElement.style.zIndex = '';
 
-    // 判斷是否落在目標區域
     const touch = e.changedTouches[0];
     const x = touch.clientX;
     const y = touch.clientY;
@@ -727,7 +710,6 @@ function resetGame() {
         webcam.stop();
         webcam = null;
     }
-    isPredicting = false;
     userId = null;
     render();
 }

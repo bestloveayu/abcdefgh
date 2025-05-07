@@ -37,8 +37,8 @@ body {
     display: grid;
     grid-template-areas: 
         "flavor  base"
-        "lemon   sparkle"
-        "ice     garnish";
+        "lemon   garnish"
+        "ice     ice";
     grid-template-rows: repeat(3, 1fr);
     grid-template-columns: repeat(2, 1fr);
     gap: 10px;
@@ -61,7 +61,6 @@ body {
 
 .cabinet-section[data-section="base"] { grid-area: base; }
 .cabinet-section[data-section="lemon"] { grid-area: lemon; }
-.cabinet-section[data-section="sparkle"] { grid-area: sparkle; }
 .cabinet-section[data-section="flavor"] { grid-area: flavor; }
 .cabinet-section[data-section="garnish"] { grid-area: garnish; }
 .cabinet-section[data-section="ice"] { grid-area: ice; }
@@ -139,7 +138,7 @@ body {
     cursor: move;
     transition: transform 0.5s ease;
     z-index: 2;
-    touch-action: none; /* 防止觸控時滾動 */
+    touch-action: none;
 }
 
 .sink-area {
@@ -346,14 +345,13 @@ body {
 
 .layer-1.active {
     background: linear-gradient(135deg, #f1c40f, #e67e22);
-    z-index: 6;
+    z-index: 5;
     border-radius: 0 0 20% 20%;
 }
-.layer-2.active { background: linear-gradient(135deg, #f7e98e, #f1c40f); z-index: 5; }
-.layer-3.active { background: linear-gradient(135deg, #ecf0f1, #b0bec5); z-index: 4; }
-.layer-4.active { background: linear-gradient(135deg, #e74c3c, #c0392b); z-index: 3; }
-.layer-5.active { background: linear-gradient(135deg, #2ecc71, #27ae60); z-index: 2; }
-.layer-6.active { background: linear-gradient(135deg, #3498db, #2980b9); z-index: 1; }
+.layer-2.active { background: linear-gradient(135deg, #f7e98e, #f1c40f); z-index: 4; }
+.layer-3.active { background: linear-gradient(135deg, #e74c3c, #c0392b); z-index: 3; }
+.layer-4.active { background: linear-gradient(135deg, #2ecc71, #27ae60); z-index: 2; }
+.layer-5.active { background: linear-gradient(135deg, #3498db, #2980b9); z-index: 1; }
 
 .ingredient {
     width: 90px;
@@ -367,7 +365,7 @@ body {
     border-radius: 50%;
     box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
     animation: glow 2s infinite alternate;
-    touch-action: none; /* 防止觸控時滾動 */
+    touch-action: none;
 }
 
 @keyframes glow {
@@ -530,14 +528,17 @@ body {
     margin: 20px 0;
 }
 
-#base1 { background-image: url('./gin.png'); }
-#base2 { background-image: url('./rum.png'); }
+#base1 { background-image: url('./rum.png'); }
+#base2 { background-image: url('./whiskey.png'); }
+#base3 { background-image: url('./vodka.png'); }
 #lemon-juice { background-image: url('./lemon-juice.png'); }
-#soda-water { background-image: url('./soda-water.png'); }
-#tonic-water { background-image: url('./tonic-water.png'); }
+#coffee { background-image: url('./coffee.png'); }
+#coffee-liqueur { background-image: url('./coffee-liqueur.png'); }
+#cinnamon { background-image: url('./cinnamon.png'); }
 #honey { background-image: url('./honey.png'); }
-#mint { background-image: url('./mint.png'); }
 #orange-liqueur { background-image: url('./orange-liqueur.png'); }
 #lemon-slice { background-image: url('./lemon-slice.png'); }
+#cream { background-image: url('./cream.png'); }
+#coffee-bean { background-image: url('./coffee-bean.png'); }
 #ice-drink { background-image: url('./ice-drink.png'); }
-#ice-blended { background-image: url('./ice-blended.png'); }
+#hot-drink { background-image: url('./hot-drink.png'); }

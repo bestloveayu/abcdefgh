@@ -553,10 +553,7 @@ function handleSinkDrop(e) {
     `;
     document.getElementById('app').appendChild(confirmDialog);
 
-    document.getElementById('confirm-reset-yes').addEventListener('click', () => confirmReset(true));
-    document.getElementById('confirm-reset-no').addEventListener('click', () => confirmReset(false));
-
-    window.confirmReset = function(confirm) {
+    const confirmReset = (confirm) => {
         if (confirm) {
             const sinkAnimation = document.createElement('div');
             sinkAnimation.className = 'sink-animation';
@@ -572,6 +569,9 @@ function handleSinkDrop(e) {
         }
         confirmDialog.remove();
     };
+
+    document.getElementById('confirm-reset-yes').addEventListener('click', () => confirmReset(true));
+    document.getElementById('confirm-reset-no').addEventListener('click', () => confirmReset(false));
 }
 
 function handleCustomerDragOver(e) {
@@ -592,10 +592,7 @@ function handleCustomerDrop(e) {
     `;
     document.getElementById('app').appendChild(confirmDialog);
 
-    document.getElementById('confirm-serve-yes').addEventListener('click', () => confirmServe(true));
-    document.getElementById('confirm-serve-no').addEventListener('click', () => confirmServe(false));
-
-    window.confirmServe = function(confirm) {
+    const confirmServe = (confirm) => {
         if (confirm) {
             const overlay = document.createElement('div');
             overlay.className = 'transition-overlay';
@@ -617,6 +614,9 @@ function handleCustomerDrop(e) {
         }
         confirmDialog.remove();
     };
+
+    document.getElementById('confirm-serve-yes').addEventListener('click', () => confirmServe(true));
+    document.getElementById('confirm-serve-no').addEventListener('click', () => confirmServe(false));
 }
 
 let touchElement = null;
